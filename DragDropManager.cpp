@@ -2,10 +2,11 @@
 
 
 
+
 void CDragDropManager::init(){
 
 }
-void CDragDropManager::exec(){
+void CDragDropManager::upDate(){
 
 }
 

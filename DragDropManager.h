@@ -1,12 +1,13 @@
 #pragma once
-#include "GameObject.h"
+
+#include "UpdateInterface.h"
 class CDragDropManager :
-	public CGameObject
+	public CUpdateInterface
 {
 	CDragDropManager();
 public:
 	void init();
-	void exec();
+	void upDate();
 	static CDragDropManager* getInstance();
 	~CDragDropManager();
 };
