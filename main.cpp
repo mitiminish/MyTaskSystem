@@ -20,7 +20,7 @@
 #include "KeyUI.h"
 
 #include "MouseUI.h"
-
+#include "EnumTest.h"
 #include "FpsController.h"
 
 
@@ -58,6 +58,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	CGameManager::addTask(new CKeyUI(), "keyUI", -10);
 	CGameManager::addTask(new CMouseUI(), "clickable_manager", -10);
 	
+	CGameManager::addTask(new CEnumTest(), "test", 10);
+
 	CGameManager::addTask(new CFpsController(), "fps", INT_MAX);
 	
 	while (processLoop() == 0){
