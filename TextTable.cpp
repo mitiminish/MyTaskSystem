@@ -12,7 +12,7 @@ void CTextTable::init(){
 	}
 }
 
-void CTextTable::exec(){
+void CTextTable::draw(){
 	if (color == -1){
 		color = 0xffffff;
 		
@@ -25,7 +25,7 @@ void CTextTable::exec(){
 
 		int pos_x = table_x+margin_x;
 		int pos_y = table_y+margin_y;
-		DrawCircle(table_x, table_y, 8, GetColor(255, 0, 0));
+		
 		int box_width = textWidth + margin_x;
 		int box_height = textHeight + margin_y;
 		for (int i = 0; i < colNum; i++){
@@ -72,7 +72,7 @@ void CTextTable::drawBox_aroundText(int LRmargin, int UDmargin, int line_width){
 	}
 }
 
-void CTextTable::drawBox_innerBox(col_row_t col_row, int LRmargin, int UDmargin, int boxColor){
+void CTextTable::drawBox_innerBox(const col_row_t &col_row, int LRmargin, int UDmargin, int boxColor){
 	//テキストの原点
 	int pos_x = table_x + margin_x + (textWidth + margin_x)*col_row.row;
 	int pos_y = table_y + margin_y + (textHeight + margin_y)*col_row.col;
@@ -151,8 +151,8 @@ void CTextTable::setXYMargin(int x_m, int y_m){
 	margin_y = y_m;
 }
 
-bool CTextTable::isOnTable(pt_t pt, col_row_t *col_row){
-	pt_t table_pt = pt_t(this->table_x+margin_x, this->table_y+margin_y);
+bool CTextTable::isOnTable(pt_t const &pt, col_row_t *col_row){
+	pt_t table_pt = pt_t(this->table_x+margin_x,this->table_y+margin_y);
 	pt_t rel_pt = pt-table_pt;
 	for (int i = 0; i < colNum; i++){
 		for (int j = 0; j < rowNum; j++){
@@ -168,6 +168,8 @@ bool CTextTable::isOnTable(pt_t pt, col_row_t *col_row){
 			}
 		}
 	}
+	*col_row = COL_ROW_NOT_FOUND;
+	
 	return false;
 }
 
@@ -185,6 +187,9 @@ rect_t CTextTable::getRect(col_row_t col_row){
 }
 
 std::string CTextTable::getString(col_row_t col_row){
+	if (col_row == COL_ROW_NOT_FOUND){
+		return "";
+	}
 	return this->strData[col_row.col][col_row.row];
 }
 

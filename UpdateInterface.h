@@ -6,6 +6,6 @@ class CUpdateInterface :
 public:
 	virtual void upDate();
 	CUpdateInterface();
-	~CUpdateInterface();
+	virtual ~CUpdateInterface();
 };
 

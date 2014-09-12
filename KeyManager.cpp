@@ -1,9 +1,10 @@
 #include "KeyManager.h"
+#include "DxLib.h"
 const int KEY_INPUT_MAX = 256;
 void CKeyManager::init(){
 	key_input.resize(KEY_INPUT_MAX);
 }
-void CKeyManager::exec(){
+void CKeyManager::upDate(){
 	char array[KEY_INPUT_MAX];
 	GetHitKeyStateAll(array);
 	for (int i = 0; i < _countof(array); i++){

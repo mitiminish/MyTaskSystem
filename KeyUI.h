@@ -1,12 +1,12 @@
 #pragma once
-#include "GameObject.h"
+#include "UpdateInterface.h"
 class CKeyUI :
-	public CGameObject
+	public CUpdateInterface
 {
 	bool isEnable;
 public:
 	void setIsEnable(bool is);
-	void exec();
+	void upDate();
 	void init();
 	CKeyUI();
 	~CKeyUI();

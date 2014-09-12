@@ -17,7 +17,7 @@ private:
 	std::vector<int> pad_input;
 	CPadManager();
 public:
-	void exec();
+	void upDate();
 	void init();
 	int getKey(CONFIG_PAD_E key);
 	static CPadManager* getInstance();

@@ -4,7 +4,7 @@ class CAddDxlibTable :
 	public CClickableTable
 {
 public:
-	void exec();
+	virtual void onClick();
 	void init();
 	CAddDxlibTable();
 	~CAddDxlibTable();

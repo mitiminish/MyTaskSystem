@@ -1,30 +1,31 @@
 #include "AddDxlibTable.h"
-
+static const char* const STR_CIRCLE = "Circle";
+static const char* const STR_TEXT = "Text";
 void CAddDxlibTable::init(){
+	CClickableTable::init();
+}
+
+
+void CAddDxlibTable::onClick(){
 
 }
 
-void CAddDxlibTable::exec(){
 
-}
 
 
 
 CAddDxlibTable::CAddDxlibTable()
 {
-	std::vector<std::vector<std::string>> data;
-	{
-		typedef std::vector<std::string> g;
-		typedef std::vector<g> s;
-		s buf{
-			g{ "Circle" },
-			g{ "text" },
-		};
-		std::copy(buf.begin(), buf.end(), back_inserter(data));
-	}
-	this->setStrArray(data);
-	this->setXY(100, 100);
+	std::string strArray[] = {
+		STR_CIRCLE,STR_TEXT
+	};
+	int colNum = _countof(strArray);
+	int rowNum = 1;
+	
+	this->setStrArray(strArray,colNum,rowNum);
+	this->setXY(5, 50);
 	this->setXYMargin(20, 20);
+	this->setTextBoxXYMargin(5, 5);
 
 }
 

@@ -1,7 +1,7 @@
 #include "DxLib.h"
 #include "MouseManager.h"
 
-void CMouseManager::exec(){
+void CMouseManager::upDate(){
 	int x, y;
 	GetMousePoint(&x, &y);
 	pt.x = x;

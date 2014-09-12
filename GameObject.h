@@ -1,14 +1,16 @@
 #pragma once
 #include "DxLib.h"
+#include "UpdateInterface.h"
+#include "DrawInterface.h"
 class CGameObject
+	:virtual public CUpdateInterface,
+	virtual public CDrawInterface
 {
-private:
-	bool isForInit;
+
 public:
-	virtual void exec(){};
+	virtual void upDate(){};
+	virtual void draw(){};
 	virtual void init(){};
-	bool getIsForInit();
-	void setIsForInit();
 	CGameObject();
 	virtual ~CGameObject();
 };

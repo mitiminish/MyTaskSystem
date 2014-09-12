@@ -1,4 +1,5 @@
 #include "PadManager.h"
+#include "DxLib.h"
 const int PAD_INPUT_MAX = 16;
 void CPadManager::init(){
 	CKeyManager* key = CKeyManager::getInstance();
@@ -17,9 +18,9 @@ void pad_or_key(int *pad, int key){
 	*pad = (*pad > key) ? *pad : key;
 }
 
-void CPadManager::exec(){
+void CPadManager::upDate(){
 	CKeyManager* key = CKeyManager::getInstance();
-	key->exec();
+	key->upDate();
 
 	int PadInput = GetJoypadInputState(DX_INPUT_PAD1);
 	

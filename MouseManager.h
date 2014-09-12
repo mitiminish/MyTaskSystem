@@ -1,8 +1,8 @@
 #pragma once
-#include "GameObject.h"
+#include "UpdateInterface.h"
 #include "Struct.h"
 class CMouseManager :
-	public CGameObject
+	public CUpdateInterface
 {
 	pt_t pt;
 	int left_btn_cnt;
@@ -10,7 +10,7 @@ class CMouseManager :
 	CMouseManager();
 public:
 	void init();
-	void exec();
+	void upDate();
 	pt_t getMousePoint();
 	int getLeftButtonInput();
 	int getRightButtonInput();

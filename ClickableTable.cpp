@@ -2,33 +2,34 @@
 void CClickableTable::init(){
 	CTextTable::init();
 }
-void CClickableTable::exec(){
-	CTextTable::exec();
+
+void CClickableTable::draw(){
+	CTextTable::draw();
 	drawBox_aroundText(textXMargin, textYMargin);
 
-	col_row_t col_row;
-	CMouseManager* mouse = CMouseManager::getInstance();
-	if (isOnTable(mouse->getMousePoint(), &col_row)){
+	
+	if (now_inside!=COL_ROW_NOT_FOUND){
 		
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA,80);
 
-		drawBox_innerBox(col_row, textXMargin, textYMargin, GetColor(255, 255, 0));
+		drawBox_innerBox(now_inside, textXMargin, textYMargin, GetColor(255, 255, 0));
 
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND,0);
 	}
-	printfDx("%s\n", getClickState().c_str());
 }
 
-std::string CClickableTable::getClickState(){
-	CMouseManager* mouse = CMouseManager::getInstance();
-	col_row_t col_row;
-	if (mouse->getLeftButtonInput() > 0){
-		if (isOnTable(mouse->getMousePoint(), &col_row)){
-			return getString(col_row);
-		}
-	}
+//‚Ü‚¢ƒ‹[ƒvŒÄ‚Î‚ê‚é‚à‚Ì‚Æ‚·‚é
+bool CClickableTable::isInside(const pt_t &pt){
+	return isOnTable(pt,&now_inside);
+}
+
+void CClickableTable::onClick(){
+
+}
+
+std::string CClickableTable::getClickString(){
+	return getString(now_inside);
 	
-	return "";
 }
 
 void CClickableTable::setTextBoxXYMargin(int x, int y){

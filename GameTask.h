@@ -4,6 +4,6 @@ class CGameTask
 public:
 	virtual void init();
 	CGameTask();
-	~CGameTask();
+	virtual ~CGameTask();
 };
 

@@ -1,12 +1,12 @@
 #include "ItemBox.h"
 
-std::unordered_map<std::string, CGameObject*> CItemBox::itemBox;
+std::unordered_map<std::string, CGameTask*> CItemBox::itemBox;
 
-CGameObject* CItemBox::findItem(std::string name){
+CGameTask* CItemBox::findItem(std::string name){
 	return itemBox[name];
 }
 
-void CItemBox::addItem(std::string name, CGameObject* obj){
+void CItemBox::addItem(std::string name, CGameTask* obj){
 	itemBox[name] = obj;
 }
 

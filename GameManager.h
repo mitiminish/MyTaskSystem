@@ -1,12 +1,13 @@
 #pragma once
-#include "GameObject.h"
+#include "GameTask.h"
 #include <string>
 #include <list>
 #include <unordered_map>
+#include "CreateEnum.h"
 struct taskObject_t{
 	int priority;
 	std::string name;
-	CGameObject *obj;
+	CGameTask *obj;
 	bool autoDelete;
 };
 
@@ -20,10 +21,14 @@ private:
 public:
 	static void playAllTask();
 	static void addTask(taskObject_t task);
-	static void addTask(CGameObject* obj, std::string name, int priority, bool autoDelete=true);
-	static void removeTask(CGameObject* obj);
+	static void addTask(CGameTask* obj, std::string name, int priority, bool autoDelete = true);
+	static void removeTask(CGameTask* obj);
 	static void removeAllTask();
+	
+	//これを呼び出すことで重くなる可能性も考慮せよ
 	static void debug_showAllTask();
+	static void setIterator(CCreateEnum *en);
+	static void setBackIterator(CCreateBackEnum *en);
 	CGameManager();
 	~CGameManager();
 };

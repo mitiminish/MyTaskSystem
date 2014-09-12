@@ -1,23 +1,27 @@
 #pragma once
 #include "MouseManager.h"
+#include "ClickableInterface.h"
+#include "UpdateInterface.h"
 #include "TextTable.h"
+
 class CClickableTable :
-	public CTextTable
+	virtual public CTextTable,
+	virtual public CClickableInterface
 {
 private:
-	bool isEnable;
+	
 	int textXMargin;
 	int textYMargin;
+	col_row_t now_inside;
 public:
-
-	void setIsEnable(bool is){
-		isEnable = is;
-	};
-	void init();
-	void exec();
+	bool isInside(const pt_t &pt);
+	virtual void onClick();
+	
+	virtual void init();
+	virtual void draw();
 	//テキストの周りにある四角がテキストからどれくらい離れているか
 	void setTextBoxXYMargin(int x, int y);
-	std::string getClickState();
+	std::string getClickString();
 	CClickableTable();
 	virtual ~CClickableTable();
 };

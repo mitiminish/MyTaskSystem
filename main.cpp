@@ -13,14 +13,15 @@
 
 #include "DxLib.h"
 #include "GameManager.h"
-#include "PadManager.h"
+#include "KeyManager.h"
 #include "MouseManager.h"
 
 
-#include "FontController.h"
 #include "KeyUI.h"
 
-#include "MainMenuTable.h"
+#include "MouseUI.h"
+
+#include "FpsController.h"
 
 
 int processLoop(){
@@ -40,7 +41,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	
 
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(98);
 
 	ChangeWindowMode(TRUE);
 
@@ -50,22 +50,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 
 	SetDrawScreen(DX_SCREEN_BACK);
-	CFontController::addFont("azuki.ttf");
 
-	int cnt = 0;
-	CGameManager::addTask(CPadManager::getInstance(), "keyManager", -1, false);
-	CGameManager::addTask(CMouseManager::getInstance(), "mouseManager", -2, false);
-	CGameManager::addTask(new CKeyUI(), "keyUI", 0);
+	CGameManager::addTask(CMouseManager::getInstance(), "mouseManager", -100, false);
+	CGameManager::addTask(CKeyManager::getInstance(), "keyManager", -100, false);
 	
+
+	CGameManager::addTask(new CKeyUI(), "keyUI", -10);
+	CGameManager::addTask(new CMouseUI(), "clickable_manager", -10);
+	
+	CGameManager::addTask(new CFpsController(), "fps", INT_MAX);
 	
 	while (processLoop() == 0){
 		CGameManager::playAllTask();
-		CGameManager::debug_showAllTask();
 		ScreenFlip();
 	}
 
 	CGameManager::removeAllTask();
-	CFontController::clearFont();
 	InitFontToHandle();
 	//?
 	DxLib_End();				// ＤＸライブラリ使用の終了処理

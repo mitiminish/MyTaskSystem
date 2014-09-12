@@ -1,5 +1,7 @@
 #include "GameManager.h"
-
+#include "DrawInterface.h"
+#include "UpdateInterface.h"
+#include "DxLib.h"
 std::list<taskObject_t> CGameManager::objList;
 std::list<taskObject_t>::iterator CGameManager::itTask;
 bool CGameManager::isNowTaskRemove=false;
@@ -8,18 +10,34 @@ void CGameManager::playAllTask(){
 	itTask = objList.begin();
 	while (itTask != objList.end())
 	{
-		CGameObject* nowTask = itTask->obj;
-		nowTask->exec();
+		CGameTask* nowTask = itTask->obj;
+		CUpdateInterface *task = dynamic_cast<CUpdateInterface*>(nowTask);
+		if (task != NULL){
+			task->upDate();
+		}
 		if (isNowTaskRemove){
 			isNowTaskRemove = false;
 		}
 		else{
 			itTask++;
-		}	
+		}
+	}
+	itTask = objList.begin();
+	while (itTask != objList.end()){
+		CDrawInterface* drawObj = dynamic_cast<CDrawInterface*>(itTask->obj);
+		if (drawObj != NULL){
+			drawObj->draw();
+		}
+		if (isNowTaskRemove){
+			isNowTaskRemove = false;
+		}
+		else{
+			itTask++;
+		}
 	}
 }
 
-void CGameManager::removeTask(CGameObject* target){
+void CGameManager::removeTask(CGameTask* target){
 	std::list<taskObject_t>::iterator it = objList.begin();
 	for (; it != objList.end(); it++){
 		if (it->obj == target){
@@ -35,7 +53,6 @@ void CGameManager::removeTask(CGameObject* target){
 			return;
 		}
 	}
-	target->setIsForInit();
 }
 
 void CGameManager::removeAllTask(){
@@ -64,7 +81,7 @@ void CGameManager::addTask(taskObject_t task){
 	}
 	objList.push_back(task);
 }
-void CGameManager::addTask(CGameObject* obj, std::string name, int priority,bool autoDelete){
+void CGameManager::addTask(CGameTask* obj, std::string name, int priority, bool autoDelete){
 	taskObject_t taskObj;
 	taskObj.name = name;
 	taskObj.obj = obj;
@@ -73,12 +90,23 @@ void CGameManager::addTask(CGameObject* obj, std::string name, int priority,bool
 	CGameManager::addTask(taskObj);
 }
 
+void CGameManager::setIterator(CCreateEnum *en){
+	en->ipos = objList.begin();
+	en->iend = objList.end();
+}
+
+
+void CGameManager::setBackIterator(CCreateBackEnum *ben){
+	ben->ipos = objList.rbegin();
+	ben->irend = objList.rend();
+}
+
 void CGameManager::debug_showAllTask(){
 	std::list<taskObject_t>::iterator it = objList.begin();
 	for (; it != objList.end(); it++){
 		int prior = it->priority;
 		std::string name = it->name;
-		CGameObject* obj = it->obj;
+		CGameTask* obj = it->obj;
 		printfDx("prior:%d,name:%s\n",prior,name.c_str());
 	}
 }
